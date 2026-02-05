@@ -6,6 +6,7 @@ import morgan from "morgan";
 //import authRoutes from "./routes/authRoute.js";
 import authRoute from "./routes/user.route.js"
 import profileRoute from "./routes/profile.route.js"
+import kycRoute from "./routes/kyc.route.js"
 
 
 const app = express();
@@ -30,6 +31,7 @@ app.use(morgan("dev"));
 // Routes
 app.use("/v1/auth", authRoute);
 app.use("/v1/profile", profileRoute);
+app.use("/v1/kyc", kycRoute);
 
 // send back a 404 error for any unknown api request
 // app.use((req, res, next) => {
