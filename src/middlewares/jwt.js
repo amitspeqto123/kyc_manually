@@ -31,3 +31,10 @@ export const isAdmin = (req, res, next) => {
   }
   next();
 };
+
+export const isKycApproved = (req, res, next) => {
+  if (req.user.isKycApproved !== true) {
+    return res.status(403).json({ message: "KYC verification required" });
+  }
+  next();
+};
