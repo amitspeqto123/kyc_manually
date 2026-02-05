@@ -6,28 +6,51 @@ const kycSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
-      unique: true
+      unique: true,
     },
     documentType: {
       type: String,
       enum: ["AADHAAR", "PAN"],
-      required: true
+      required: true,
     },
     documentNumber: {
       type: String,
-      required: true
+      required: true,
     },
     documentImages: {
-      type: [String]
+      type: [String],
     },
+
+    // Third-party provider info
+    provider: {
+      type: String,
+      enum: ["PERSONA"],
+      default: "PERSONA",
+    },
+
+    providerRequestId: {
+      type: String, // Persona check ID
+    },
+
+    providerStatus: {
+      type: String,
+      enum: ["PENDING", "SUCCESS", "FAILED"],
+      default: "PENDING",
+    },
+
     status: {
       type: String,
       enum: ["PENDING", "APPROVED", "REJECTED"],
-      default: "PENDING"
+      default: "PENDING",
     },
     remark: {
-      type: String
-    }
+      type: String,
+    },
+
+    // optional but useful (debug / audit)
+    providerResponse: {
+      type: Object,
+    },
   },
   { timestamps: true }
 );

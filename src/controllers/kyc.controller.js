@@ -55,3 +55,34 @@ export const updateKycStatus = async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 };
+
+// New endpoint to fix existing KYC records
+export const fixKycProviderId = async (req, res) => {
+  try {
+    const { kycId, providerRequestId } = req.body;
+
+    if (!kycId || !providerRequestId) {
+      return res.status(400).json({
+        message: "kycId and providerRequestId are required"
+      });
+    }
+
+    const Kyc = (await import("../models/kyc.model.js")).default;
+    const kyc = await Kyc.findByIdAndUpdate(
+      kycId,
+      { providerRequestId },
+      { new: true }
+    );
+
+    if (!kyc) {
+      return res.status(404).json({ message: "KYC not found" });
+    }
+
+    res.status(200).json({
+      message: "KYC providerRequestId updated successfully",
+      kyc
+    });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
