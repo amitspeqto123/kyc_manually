@@ -14,6 +14,7 @@ const app = express();
 // Middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+// app.use(express.raw({ type: 'application/json' })); // Removed global raw middleware - handled per route
 app.use(cors({ origin: true, credentials: true }));
 app.use(helmet());
 app.use(morgan("dev"));
